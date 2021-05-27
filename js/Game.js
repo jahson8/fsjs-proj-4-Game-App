@@ -34,13 +34,20 @@ class Game {
    * Selects random phrase from phrase property
    * @return {object} An array of phrases that could be used in the game
    */
-
   getRandomPhrase() {
     const randInd = Math.floor(Math.random() * this.phrases.length);
     return this.phrases[randInd];
   }
 
-  startGame() {}
+  /**
+   * Begins game by selecting a random phrase and displaying it to user
+   */
+  startGame() {
+    document.getElementById("overlay").style.display = "none";
+    const randomPhrase = this.getRandomPhrase();
+    randomPhrase.addPhraseToDisplay();
+    this.activePhrase = randomPhrase;
+  }
 
   handleInteraction() {}
 

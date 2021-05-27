@@ -27,6 +27,7 @@ class Phrase {
 
       ul.appendChild(li);
     }
+
     phraseDiv.innerHTML = "";
     phraseDiv.appendChild(ul);
   }
