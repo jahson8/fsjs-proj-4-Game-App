@@ -49,9 +49,27 @@ class Game {
     this.activePhrase = randomPhrase;
   }
 
-  handleInteraction() {}
+  handleInteraction(evt) {
+    let letter = evt.target.textContent;
+  }
 
-  checkForWin() {}
+  /**
+* Checks for winning move
+* @return {boolean} True if game has been won, false if game wasn't
+won
+*/
+  checkForWin() {
+    const letters = document.querySelectorAll(".letter");
+    const shown = document.querySelectorAll(".show");
+    return letters.length === shown.length;
+  }
+
+  /**
+   * Increases the value of the missed property
+   * Removes a life from the scoreboard
+   * Checks if player has remaining lives and ends game if player is out
+   */
+  removeLife() {}
 
   gameOver() {}
 }
