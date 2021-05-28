@@ -47,10 +47,28 @@ class Game {
     const randomPhrase = this.getRandomPhrase();
     randomPhrase.addPhraseToDisplay();
     this.activePhrase = randomPhrase;
+    this.resetGame();
   }
 
-  handleInteraction(evt) {
-    let letter = evt.target.textContent;
+  /**
+   * Handles onscreen keyboard button clicks
+   * @param {HTMLButtonElement} key - The clicked button element
+   */
+
+  handleInteraction(key) {
+    const letter = key.textContent;
+    key.disabled = true;
+
+    if (this.activePhrase.checkLetter(letter)) {
+      key.classList.add("chosen");
+      this.activePhrase.showMatchedLetter(letter);
+      if (this.checkForWin()) {
+        this.gameOver(true);
+      }
+    } else {
+      this.removeLife();
+      key.classList.add("wrong");
+    }
   }
 
   /**
@@ -69,7 +87,66 @@ won
    * Removes a life from the scoreboard
    * Checks if player has remaining lives and ends game if player is out
    */
-  removeLife() {}
+  removeLife() {
+    const tries = document.querySelectorAll(".tries");
+    if (this.missed === 4) {
+      this.gameOver(false);
+    } else {
+      this.missed++;
+      tries[0].firstElementChild.src = "images/lostHeart.png";
+      tries[0].className = "lost";
+    }
+  }
 
-  gameOver() {}
+  /**
+   * Displays game over message
+   * @param {boolean} gameWon - Whether or not the user won the game
+   */
+  gameOver(gameWon) {
+    /**
+     * Updates The overlay message
+     * @param {string} result - updates the overlay class to either win or lose
+     *  @param {string} message - updates the overlay H1 with end of game message
+     */
+    const overlayMessage = (result, message) => {
+      const overlay = document.getElementById("overlay");
+      const h1 = overlay.firstElementChild.nextElementSibling;
+      overlay.className = result;
+      h1.textContent = message;
+      overlay.style.display = "";
+    };
+
+    if (gameWon) {
+      overlayMessage("win", "You Won");
+    } else {
+      overlayMessage("lose", "Better Luck Next Time!");
+    }
+  }
+
+  /**
+   * enable onscreen keyboard
+   * resets live hearts
+   *resets missed property to zero(0)
+   */
+
+  resetGame() {
+    const lostHearts = document.querySelectorAll(".lost");
+    const disabledBtns = document.querySelectorAll("button[disabled]");
+
+    // resets missed to zero(0)
+    this.missed = 0;
+
+    // resets live hearts
+    lostHearts.forEach((heart) => {
+      heart.className = "tries";
+      heart.firstElementChild.src = "images/liveHeart.png";
+    });
+
+    // resets disabled buttons and removes the .chosen and .wrong classes
+    disabledBtns.forEach((btn) => {
+      btn.disabled = false;
+      if (btn.classList.contains("chosen")) btn.classList.remove("chosen");
+      if (btn.classList.contains("wrong")) btn.classList.remove("wrong");
+    });
+  }
 }

@@ -47,6 +47,7 @@ class Phrase {
    */
   showMatchedLetter(letter) {
     const letters = document.querySelectorAll(".letter");
+
     letters.forEach((letterLi) => {
       if (letterLi.textContent === letter) {
         letterLi.classList.remove("hide");
