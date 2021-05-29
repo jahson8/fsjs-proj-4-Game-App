@@ -18,12 +18,12 @@ document.addEventListener("DOMContentLoaded", () => {
     game.startGame();
   });
 
-  //handles onscreen keyboard interactivity
+  //add UI keyboard interactivity
   keyboard.addEventListener("click", (evt) => {
     game.handleInteraction(evt);
   });
 
-  // Handle user keyboard interactivity
+  // add user keyboard interactivity
   document.addEventListener("keyup", (evt) => {
     game.handleInteraction(evt);
   });

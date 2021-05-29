@@ -51,45 +51,43 @@ class Game {
   }
 
   /**
-   * Handles onscreen keyboard button clicks
-   * @param {HTMLButtonElement} key - The clicked button element
+   *Event handler for keydown and click events
+   * @param {eventObject} key -   event handler's event object
    */
   handleInteraction(key) {
     const clicked = key.target;
     const pressed = key.key;
 
-    if (clicked && clicked.classList.contains("key")) {
-      const letter = clicked.textContent;
-      clicked.disabled = true;
+    /**
+     * Shows letter, updates UI keyboard and, shows end game overlay
+     * @param {HTMLButtonElement} node - The selected element
+     */
+    const updateUI = (node) => {
+      const letter = node.textContent;
+      node.disabled = true;
       if (this.activePhrase.checkLetter(letter)) {
-        clicked.classList.add("chosen");
+        node.classList.add("chosen");
         this.activePhrase.showMatchedLetter(letter);
         if (this.checkForWin()) {
           this.gameOver(true);
         }
       } else {
         this.removeLife();
-        clicked.classList.add("wrong");
+        node.classList.add("wrong");
       }
+    };
+
+    // controls UI keyboard Interactivity
+    if (clicked && clicked.classList.contains("key")) {
+      updateUI(clicked);
     }
 
-    // Adds user keyboard interactivity
-    if (pressed && /^[a-z]$/.test(pressed)) {
+    // controls user keyboard interactivity
+    if (pressed) {
       const keys = document.querySelectorAll(".key");
       keys.forEach((key) => {
-        let letter = key.textContent;
-        if (pressed === letter && !key.disabled) {
-          key.disabled = true;
-          if (this.activePhrase.checkLetter(letter)) {
-            key.classList.add("chosen");
-            this.activePhrase.showMatchedLetter(letter);
-            if (this.checkForWin()) {
-              this.gameOver(true);
-            }
-          } else {
-            this.removeLife();
-            key.classList.add("wrong");
-          }
+        if (pressed === key.textContent && !key.disabled) {
+          updateUI(key);
         }
       });
     }
