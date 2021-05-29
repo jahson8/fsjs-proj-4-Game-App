@@ -54,20 +54,44 @@ class Game {
    * Handles onscreen keyboard button clicks
    * @param {HTMLButtonElement} key - The clicked button element
    */
-
   handleInteraction(key) {
-    const letter = key.textContent;
-    key.disabled = true;
+    const clicked = key.target;
+    const pressed = key.key;
 
-    if (this.activePhrase.checkLetter(letter)) {
-      key.classList.add("chosen");
-      this.activePhrase.showMatchedLetter(letter);
-      if (this.checkForWin()) {
-        this.gameOver(true);
+    if (clicked && clicked.classList.contains("key")) {
+      const letter = clicked.textContent;
+      clicked.disabled = true;
+      if (this.activePhrase.checkLetter(letter)) {
+        clicked.classList.add("chosen");
+        this.activePhrase.showMatchedLetter(letter);
+        if (this.checkForWin()) {
+          this.gameOver(true);
+        }
+      } else {
+        this.removeLife();
+        clicked.classList.add("wrong");
       }
-    } else {
-      this.removeLife();
-      key.classList.add("wrong");
+    }
+
+    // Adds user keyboard interactivity
+    if (pressed && /^[a-z]$/.test(pressed)) {
+      const keys = document.querySelectorAll(".key");
+      keys.forEach((key) => {
+        let letter = key.textContent;
+        if (pressed === letter && !key.disabled) {
+          key.disabled = true;
+          if (this.activePhrase.checkLetter(letter)) {
+            key.classList.add("chosen");
+            this.activePhrase.showMatchedLetter(letter);
+            if (this.checkForWin()) {
+              this.gameOver(true);
+            }
+          } else {
+            this.removeLife();
+            key.classList.add("wrong");
+          }
+        }
+      });
     }
   }
 

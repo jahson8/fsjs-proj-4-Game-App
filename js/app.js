@@ -20,9 +20,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //handles onscreen keyboard interactivity
   keyboard.addEventListener("click", (evt) => {
-    let key = evt.target;
-    if (key.classList.contains("key")) {
-      game.handleInteraction(key);
-    }
+    game.handleInteraction(evt);
+  });
+
+  // Handle user keyboard interactivity
+  document.addEventListener("keyup", (evt) => {
+    game.handleInteraction(evt);
   });
 });
