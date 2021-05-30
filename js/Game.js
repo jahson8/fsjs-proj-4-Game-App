@@ -52,15 +52,14 @@ class Game {
 
   /**
    *Event handler for keydown and click events
-   * @param {eventObject} key -   event handler's event object
+   * @param {eventObject} evt -   event handler's event object
    */
-  handleInteraction(key) {
-    const clicked = key.target;
-    const pressed = key.key;
+  handleInteraction(evt) {
+    const type = evt.type;
 
     /**
      * Shows letter, updates UI keyboard and, shows end game overlay
-     * @param {HTMLButtonElement} node - The selected element
+     * @param {HTMLButtonElement} node - The current DOM node
      */
     const updateUI = (node) => {
       const letter = node.textContent;
@@ -78,17 +77,15 @@ class Game {
     };
 
     // controls UI keyboard Interactivity
-    if (clicked && clicked.classList.contains("key")) {
-      updateUI(clicked);
+    if (type === "click") {
+      if (evt.target.classList.contains("key")) updateUI(evt.target);
     }
 
     // controls user keyboard interactivity
-    if (pressed) {
+    if (type === "keyup") {
       const keys = document.querySelectorAll(".key");
-      keys.forEach((key) => {
-        if (pressed === key.textContent && !key.disabled) {
-          updateUI(key);
-        }
+      keys.forEach((node) => {
+        if (evt.key === node.textContent && !node.disabled) updateUI(node);
       });
     }
   }
@@ -110,11 +107,11 @@ won
    * Checks if player has remaining lives and ends game if player is out
    */
   removeLife() {
-    const tries = document.querySelectorAll(".tries");
     if (this.missed === 4) {
       this.gameOver(false);
     } else {
       this.missed++;
+      const tries = document.querySelectorAll(".tries");
       tries[0].firstElementChild.src = "images/lostHeart.png";
       tries[0].className = "lost";
     }

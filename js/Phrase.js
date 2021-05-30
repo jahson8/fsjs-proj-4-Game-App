@@ -35,7 +35,7 @@ class Phrase {
   /**
    * Checks if passed letter is in phrase
    * @param {string} letter- Letter to check
-   *
+   * @return {boolean} - true if letter is in string
    */
   checkLetter(letter) {
     return this.phrase.includes(letter);
@@ -43,7 +43,8 @@ class Phrase {
 
   /**
    * Displays passed letter on screen after a match is found
-   * @param (string) letter - Letter to display
+   * @param {string} letter - Letter to display
+   *
    */
   showMatchedLetter(letter) {
     const letters = document.querySelectorAll(".letter");
