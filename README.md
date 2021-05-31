@@ -16,9 +16,9 @@ A player can guess a letter only once. After they’ve guessed a letter, your pr
 
 ## Modified UI Elements
 
--Added background Gradient to the Gameboard.
--Change h2 color
--changed hidden letters background-color to white
+- Added background Gradient to the Gameboard.
+- Change h2 color
+- changed hidden letters background-color to white
 
 ## Language
 
