@@ -1,8 +1,7 @@
 /* Treehouse FSJS Techdegree
  * Project 4 - OOP Game App
  * app.js */
-
-const game = new Game();
+let game;
 
 document.addEventListener("DOMContentLoaded", () => {
   const startBtn = document.getElementById("btn__reset");
@@ -15,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Starts game when start button is clicked
   startBtn.addEventListener("click", () => {
+    game = new Game();
     game.startGame();
   });
 
