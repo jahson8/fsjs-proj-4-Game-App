@@ -1,11 +1,11 @@
 /* Treehouse FSJS Techdegree
  * Project 4 - OOP Game App
  * app.js */
-let game;
 
 document.addEventListener("DOMContentLoaded", () => {
   const startBtn = document.getElementById("btn__reset");
   const keyboard = document.getElementById("qwerty");
+  let game;
 
   /**
    * Event Listeners

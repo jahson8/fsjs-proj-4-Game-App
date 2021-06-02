@@ -145,15 +145,12 @@ won
   /**
    * enable onscreen keyboard
    * resets live hearts
-   *resets missed property to zero(0)
+   *
    */
 
   resetGame() {
     const lostHearts = document.querySelectorAll(".lost");
     const disabledBtns = document.querySelectorAll("button[disabled]");
-
-    // resets missed to zero(0)
-    this.missed = 0;
 
     // resets live hearts
     lostHearts.forEach((heart) => {
